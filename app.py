@@ -17,7 +17,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'abel-angel1A',
+    'password': 'yourpassword',
     'database': 'governance_db'
 }
 
