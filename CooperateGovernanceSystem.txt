@@ -1,0 +1,59 @@
+# CooperateGovernanceSystem
+📊 Corporate Governance System
+A Flask-based web application for managing board meetings, stakeholders, compliance documents, and corporate decisions
+
+🌟 Key Features
+
+✅ Stakeholder Management
+Track shareholders, board members, and executives
+Manage contact info and share ownership
+
+✅ Board Meeting Scheduling
+Agenda preparation
+Attendance tracking
+Decision recording
+
+✅ Compliance Tracking
+Document expiration alerts
+Audit trails
+Policy version control
+
+✅ Decision Registry
+Record board resolutions
+Track implementation status
+
+🛠️ Technology Stack
+
+Component |	Technology
+Frontend	|  HTML5, CSS3, JavaScript
+Backend	  |  Python Flask
+Database	|  MySQL
+ORM	      |  mysql-connector
+Styling   | 	Bootstrap 5 + Custom CSS
+Icons	    |  Font Awesome
+
+📂 Project Structure
+governance-system/  
+├── static/  
+│   ├── css/           # Custom styles  
+│   ├── js/            # Interactive scripts  
+│   └── images/        # Logos/icons  
+├── templates/         # Jinja2 templates  
+│   ├── base.html      # Main layout  
+│   ├── dashboard.html # Dashboard  
+│   └── stakeholders/  # Stakeholder views  
+├── app.py             # Flask application  
+├── requirements.txt   # Dependencies  
+└── README.md          # Project documentation  
+
+
+🚀 Getting Started
+1.Install Dependancies
+ pip install -r requirements.txt
+2.Configure MYSQL in app.py
+ db_config = {
+    'host': 'localhost',
+    'user': 'admin',
+    'password': 'securepassword',
+    'database': 'governance_db'
+}

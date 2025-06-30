@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Conflicts of Interest</h2>
+    
+    <div class="form-container">
+        <h3>Report New Conflict</h3>
+        <form method="POST" action="{{ url_for('add_conflict') }}">
+            <div class="form-group">
+                <label>Stakeholder:</label>
+                <select name="stakeholder_id" class="form-control" required>
+                    <option value="">Select Stakeholder</option>
+                    {% for stakeholder in stakeholders %}
+                    <option value="{{ stakeholder.StakeholderID }}">{{ stakeholder.Name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Description:</label>
+                <textarea name="description" rows="3" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Status:</label>
+                <select name="status" class="form-control" required>
+                    <option value="Disclosed">Disclosed</option>
+                    <option value="Resolved">Resolved</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Report Conflict</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Stakeholder</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conflict in conflicts %}
+                <tr>
+                    <td>{{ conflict.ConflictID }}</td>
+                    <td>{{ conflict.StakeholderName }}</td>
+                    <td>{{ conflict.Description[:70] }}{% if conflict.Description|length > 70 %}...{% endif %}</td>
+                    <td>
+                        <span class="badge {% if conflict.Status == 'Disclosed' %}badge-warning{% else %}badge-success{% endif %}">
+                            {{ conflict.Status }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-info">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

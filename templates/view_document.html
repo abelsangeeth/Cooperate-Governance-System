@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Document Details</h2>
+    
+    <div class="card">
+        <div class="card-header">
+            <h3>{{ document.Name }}</h3>
+            <span class="status-badge {{ document.Status|lower }}">
+                {{ document.Status }}
+            </span>
+        </div>
+        <div class="card-body">
+            <p><strong>Type:</strong> {{ document.Type }}</p>
+            {% if document.ExpiryDate %}
+            <p><strong>Expiry Date:</strong> {{ document.ExpiryDate.strftime('%Y-%m-%d') }}</p>
+            <p><strong>Days Remaining:</strong> {{ (document.ExpiryDate - today).days }}</p>
+            {% endif %}
+            <div class="actions">
+                <a href="{{ url_for('download_document', doc_id=document.DocumentID) }}" 
+                   class="btn btn-primary">
+                   <i class="fas fa-download"></i> Download
+                </a>
+                <a href="{{ url_for('compliance') }}" class="btn">
+                    <i class="fas fa-arrow-left"></i> Back to Compliance
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

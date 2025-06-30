@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Policies</h2>
+    
+    <div class="form-container">
+        <h3>Add New Policy</h3>
+        <form method="POST" action="{{ url_for('add_policy') }}">
+            <div class="form-group">
+                <label>Policy Name:</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Version:</label>
+                <input type="text" name="version" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Approval Date:</label>
+                <input type="date" name="approval_date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Category:</label>
+                <select name="category" class="form-control" required>
+                    <option value="Code of Conduct">Code of Conduct</option>
+                    <option value="Ethics">Ethics</option>
+                    <option value="Financial">Financial</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Policy</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Version</th>
+                    <th>Category</th>
+                    <th>Approval Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for policy in policies %}
+                <tr>
+                    <td>{{ policy.PolicyID }}</td>
+                    <td>{{ policy.Name }}</td>
+                    <td>{{ policy.Version }}</td>
+                    <td>{{ policy.Category }}</td>
+                    <td>
+                        {% if policy.ApprovalDate %}
+                            {{ policy.ApprovalDate.strftime('%Y-%m-%d') }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

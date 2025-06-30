@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Edit Stakeholder</h2>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('edit_stakeholder', stakeholder_id=stakeholder.StakeholderID) }}">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" class="form-control" value="{{ stakeholder.Name }}" required>
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <select name="role" class="form-control" required>
+                    <option value="Shareholder" {% if stakeholder.Role == 'Shareholder' %}selected{% endif %}>Shareholder</option>
+                    <option value="Board Member" {% if stakeholder.Role == 'Board Member' %}selected{% endif %}>Board Member</option>
+                    <option value="Executive" {% if stakeholder.Role == 'Executive' %}selected{% endif %}>Executive</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Contact Info</label>
+                <input type="text" name="contact" class="form-control" value="{{ stakeholder.ContactInfo }}">
+            </div>
+            <div class="form-group">
+                <label>Shares Owned</label>
+                <input type="number" name="shares" class="form-control" value="{{ stakeholder.SharesOwned }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Stakeholder</button>
+            <a href="{{ url_for('stakeholders') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

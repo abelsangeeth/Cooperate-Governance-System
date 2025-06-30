@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Governance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-landmark"></i>
+            <span>Governance System</span>
+        </div>
+        <nav>
+            <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint == 'dashboard' else '' }}">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ url_for('stakeholders') }}" class="{{ 'active' if request.endpoint == 'stakeholders' else '' }}">
+                <i class="fas fa-users"></i>
+                <span>Stakeholders</span>
+            </a>
+            <a href="{{ url_for('meetings') }}" class="{{ 'active' if request.endpoint == 'meetings' else '' }}">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Meetings</span>
+            </a>
+            <a href="{{ url_for('decisions') }}" class="{{ 'active' if request.endpoint == 'decisions' else '' }}">
+                <i class="fas fa-gavel"></i>
+                <span>Decisions</span>
+            </a>
+            <a href="{{ url_for('compliance') }}" class="{{ 'active' if request.endpoint == 'compliance' else '' }}">
+                <i class="fas fa-file-contract"></i>
+                <span>Compliance</span>
+            </a>
+            <a href="{{ url_for('audits') }}">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Audits</span>
+            </a>
+            <a href="{{ url_for('policies') }}">
+                <i class="fas fa-file-signature"></i>
+                <span>Policies</span>
+            </a>
+            <!--<a href="{{ url_for('evaluations') }}">
+                <i class="fas fa-chart-line"></i>
+                <span>Evaluations</span>
+            </a>-->
+            <a href="{{ url_for('conflicts') }}">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Conflicts</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="user-profile">
+                <img src="{{ url_for('static', filename='images/user.png') }}" alt="User">
+                <span>Admin</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

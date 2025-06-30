@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Board Meetings</h2>
+        <button class="btn btn-primary" id="toggleMeetingFormBtn">
+            <i class="fas fa-plus"></i> Schedule Meeting
+        </button>
+    </div>
+
+    <div class="form-container" id="meetingForm" style="display: none;">
+        <form method="POST" action="{{ url_for('add_meeting') }}" class="meeting-form">
+            <h3>Schedule New Meeting</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" name="date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Time</label>
+                    <input type="time" name="time" class="form-control" >
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location" class="form-control" required>
+                </div>
+                <div class="form-group span-2">
+                    <label>Agenda</label>
+                    <textarea name="agenda" class="form-control" rows="3" required></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-calendar-plus"></i> Schedule Meeting
+            </button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <div class="table-controls">
+            <div class="table-filter">
+                <i class="fas fa-filter"></i>
+                <select id="timeFilter">
+                    <option value="all">All Meetings</option>
+                    <option value="upcoming">Upcoming</option>
+                    <option value="past">Past Meetings</option>
+                </select>
+            </div>
+            <div class="table-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="meetingSearch" placeholder="Search meetings...">
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table data-table" id="meetingsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Agenda</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for meeting in meetings %}
+                    <tr class="{% if meeting.Date >= current_date %}upcoming{% else %}past{% endif %}">
+                        <td>{{ meeting.MeetingID }}</td>
+                        <td>
+                            <span class="meeting-date">
+                                {{ meeting.Date.strftime('%Y-%m-%d') }}
+                                {% if meeting.Date >= current_date %}
+                                <span class="badge upcoming-badge">Upcoming</span>
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            {% if meeting.Time %}
+                                {% if meeting.Time is string %}
+                                    {{ meeting.Time[:5] }}
+                                {% else %}
+                                    {{ meeting.Time.strftime('%H:%M') }}
+                                {% endif %}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            <i class="fas fa-map-marker-alt"></i> {{ meeting.Location }}
+                        </td>
+                        <td>
+                            <div class="agenda-preview" title="{{ meeting.Agenda }}">
+                                {{ meeting.Agenda[:50] }}{% if meeting.Agenda|length > 50 %}...{% endif %}
+                            </div>
+                        </td>
+                        <td class="actions">
+                            <a href="{{ url_for('view_meeting', id=meeting.MeetingID) }}" class="btn-view">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+                            <a href="#" class="btn-status" data-id="{{ meeting.MeetingID }}">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
